@@ -1,0 +1,8 @@
+# public/robots.txt
+
+# Allow all search engines and AI search assistants to crawl everything
+User-agent: *
+Allow: /
+
+# Link to your sitemap (Astro replaces ${site} with your real domain during build)
+Sitemap: ${site}/sitemap-index.xml

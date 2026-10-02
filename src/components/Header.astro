@@ -1,0 +1,18 @@
+---
+// Header component featuring dynamic navigation from navigation.ts
+import { navigationLinks } from '../data/navigation';
+---
+
+<header>
+  <nav>
+    <ul>
+      {navigationLinks.map((link) => (
+        <li>
+          <a href={link.path}>
+            {link.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
