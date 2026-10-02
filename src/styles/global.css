@@ -1,0 +1,4 @@
+/* @import "@fontsource/inter"; - imports all weights but to keep small size we do below */
+
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/700.css';
