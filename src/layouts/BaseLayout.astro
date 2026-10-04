@@ -1,12 +1,13 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import '../styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
   language?: string;
+  dir?: string;
   image?: string; // For OpenGraph image 
 }
 
@@ -14,6 +15,7 @@ const {
   title = "", 
   description = "A standard Astro website boilerplate.", 
   language = "en",
+  dir = "ltr", // standard for left-to-right text direction
   image = "/og-default.jpg"
 } = Astro.props;
 
@@ -21,15 +23,28 @@ const {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const pageTitle = title ? `${title} - My Brand` : "My Brand";
+
+// Schema.org data
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "My Brand",
+  "url": Astro.site,
+  "image": new URL(image, Astro.site).toString(),
+  "description": description
+};
 ---
 
 <!doctype html>
-<html lang={language}>
+<html lang={language} dir={dir}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Schema.org -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
 
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website" />
@@ -48,13 +63,13 @@ const pageTitle = title ? `${title} - My Brand` : "My Brand";
     <title>{pageTitle}</title>
   </head>
   <body>
-    <Header />
+    <SiteHeader />
 
     <!-- Skip-link target for accessibility; allows screen readers and keyboard users to jump straight to the main content -->
     <main id="main-content">
       <slot />
     </main>
 
-    <Footer />
+    <SiteFooter />
   </body>
 </html>

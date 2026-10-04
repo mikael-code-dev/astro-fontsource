@@ -2,3 +2,75 @@
 
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/700.css';
+
+/* Base variables and default theme (light) */
+:root {
+  /* Site-prefixed semantic variables to avoid collisions with third-party CSS */
+  --site-bg: #ffffff;
+  --site-text: #111111;
+  --site-primary: #0056b3;
+  --site-border: #cccccc;
+}
+
+/* Automatic support if the user's operating system is set to dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Define the same variables here with dark color values */
+    --site-bg: #121212;
+    --site-text: #f0f0f0;
+    --site-primary: #4da3ff;
+    --site-border: #333333;
+  }
+}
+
+/*  */
+/*  */
+
+/* Modern CSS Reset */
+
+/* 1. Use a more intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margins */
+* {
+  margin: 0;
+}
+
+/* 3. Improve default body typography */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 4. Ensure media elements are block-level and responsive */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 5. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 6. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
