@@ -1,18 +1,147 @@
 ---
-// Header component featuring dynamic navigation from navigation.ts
-import { navigationLinks } from '../data/navigation';
+import { Image } from "astro:assets";
+import { navigationLinks } from "../data/navigation";
+import logoImage from "../assets/images/logo.svg"; // Byt till logo.png eller logo.webp om du kör det
+
+interface Props {
+  companyName?: string;
+  showCta?: boolean;
+  ctaText?: string;
+  ctaPath?: string;
+}
+
+const {
+  companyName = "My Company",
+  showCta = true,
+  ctaText = "Contact Us",
+  ctaPath = "/contact"
+} = Astro.props;
 ---
 
-<header>
-  <nav>
-    <ul>
-      {navigationLinks.map((link) => (
-        <li>
-          <a href={link.path}>
-            {link.title}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </nav>
+<header class="site-header">
+  <div class="header-container">
+    
+    <!-- Brand / Logo -->
+    <a href="/" class="brand-link" aria-label={`${companyName} - Home`}>
+      {logoImage ? (
+        <Image 
+          src={logoImage} 
+          alt={`${companyName} logo`} 
+          class="site-logo" 
+          width={160} 
+          height={40} 
+        />
+      ) : (
+        <span class="brand-text">{companyName}</span>
+      )}
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav" aria-label="Main Navigation">
+      <ul>
+        {navigationLinks.map((item) => (
+          <li><a href={item.path}>{item.title}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Header Actions (e.g. Mini-CTA) -->
+    {showCta && (
+      <div class="header-actions">
+        <a href={ctaPath} class="header-cta">{ctaText}</a>
+      </div>
+    )}
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="mobile-toggle" aria-label="Toggle Navigation" aria-expanded="false">
+      <span class="hamburger-icon"></span>
+    </button>
+
+  </div>
 </header>
+
+<style>
+  .site-header {
+    background-color: var(--site-bg);
+    border-bottom: 1px solid var(--site-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .site-logo {
+    height: auto;
+    max-width: 160px;
+    object-fit: contain;
+  }
+
+  .brand-text {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: var(--site-text);
+  }
+
+  .desktop-nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 2rem;
+  }
+
+  .desktop-nav a {
+    color: var(--site-text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  .desktop-nav a:hover {
+    color: var(--site-primary);
+  }
+
+  .header-cta {
+    background-color: var(--site-primary);
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  /* Responsive layout adjustment for mobile */
+  @media (max-width: 768px) {
+    .desktop-nav,
+    .header-actions {
+      display: none;
+    }
+
+    .mobile-toggle {
+      display: block;
+    }
+  }
+</style>

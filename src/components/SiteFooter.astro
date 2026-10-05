@@ -1,8 +1,153 @@
 ---
-// Footer component
+// Get the current year automatically for the copyright text
 const currentYear = new Date().getFullYear();
+
+interface Props {
+  companyName?: string;
+  orgNumber?: string;
+  ivoNumber?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+}
+
+const {
+  companyName = "My Company AB",
+  orgNumber = "556000-0000",
+  ivoNumber = "",
+  email = "info@example.com",
+  phone = "+46 (0)31 000 00 00",
+  address = "Storgatan 1, Gothenburg"
+} = Astro.props;
 ---
 
 <footer>
-  <p>&copy; {currentYear} My Brand. All rights reserved.</p>
+  <div class="footer-grid">
+    
+    <!-- Column 1: Brand & Official Details -->
+    <div>
+      <h3>{companyName}</h3>
+      <p class="description">
+        Providing reliable and accessible solutions for modern web experiences.
+      </p>
+      <div class="legal-info">
+        <p>Org.nr: {orgNumber}</p>
+        {ivoNumber && <p>IVO reg.nr: {ivoNumber}</p>}
+      </div>
+    </div>
+
+    <!-- Column 2: Navigation Links -->
+    <div>
+      <h4>Navigation</h4>
+      <nav aria-label="Footer Navigation">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Column 3: Contact & Info -->
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li>Email: <a href={`mailto:${email}`}>{email}</a></li>
+        <li>Phone: <a href={`tel:${phone.replace(/\s+/g, '')}`}>{phone}</a></li>
+        <li>Address: {address}</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Bottom Row: Copyright & Policy Links -->
+  <div class="footer-bottom">
+    <p>&copy; {currentYear} {companyName}. All rights reserved.</p>
+    <nav aria-label="Legal Navigation">
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="/cookies">Cookie Settings</a>
+    </nav>
+  </div>
 </footer>
+
+<style>
+  footer {
+    background-color: var(--site-bg);
+    color: var(--site-text);
+    border-top: 1px solid var(--site-border);
+    padding: 3rem 1.5rem 1.5rem;
+  }
+
+  .footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  p.description {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  .legal-info {
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 2.5rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--site-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-bottom nav {
+    display: flex;
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
