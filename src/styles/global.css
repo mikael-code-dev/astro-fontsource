@@ -1,25 +1,28 @@
 /* @import "@fontsource/inter"; - imports all weights but to keep small size we do below */
 
-@import '@fontsource/inter/400.css';
-@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-700.css';
+@import '@fontsource/manrope/latin-400.css';
 
 /* Base variables and default theme (light) */
 :root {
   /* Site-prefixed semantic variables to avoid collisions with third-party CSS */
-  --site-bg: #ffffff;
+  /* --site-bg: #ffffff;
   --site-text: #111111;
   --site-primary: #0056b3;
-  --site-border: #cccccc;
+  --site-border: rgba(0 0 0 / 0.1); */
+
+  /* My way */
 }
 
 /* Automatic support if the user's operating system is set to dark mode */
 @media (prefers-color-scheme: dark) {
   :root {
     /* Define the same variables here with dark color values */
-    --site-bg: #121212;
+    /* --site-bg: #121212;
     --site-text: #f0f0f0;
     --site-primary: #4da3ff;
-    --site-border: #333333;
+    --site-border: #333333; */
   }
 }
 
@@ -40,10 +43,22 @@
   margin: 0;
 }
 
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
 /* 3. Improve default body typography */
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
 }
 
 /* 4. Ensure media elements are block-level and responsive */
@@ -73,4 +88,19 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

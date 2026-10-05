@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { navigationLinks } from "../data/navigation";
-import logoImage from "../assets/images/logo.svg"; // Byt till logo.png eller logo.webp om du kör det
+import logoImage from "../assets/images/logo.svg";
 
 interface Props {
   companyName?: string;
@@ -63,6 +63,7 @@ const {
 <style>
   .site-header {
     background-color: var(--site-bg);
+    background-color: oklch(86.9% 0.005 56.366);
     border-bottom: 1px solid var(--site-border);
     position: sticky;
     top: 0;
@@ -72,7 +73,7 @@ const {
   .header-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 1.5rem;
+    padding: 0rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -86,7 +87,7 @@ const {
 
   .site-logo {
     height: auto;
-    max-width: 160px;
+    max-width: 70px;
     object-fit: contain;
   }
 
