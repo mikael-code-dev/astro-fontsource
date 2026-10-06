@@ -3,16 +3,31 @@
 @import '@fontsource/inter/latin-400.css';
 @import '@fontsource/inter/latin-700.css';
 @import '@fontsource/manrope/latin-400.css';
+@import '@fontsource/instrument-serif/latin-400.css';
 
 /* Base variables and default theme (light) */
 :root {
   /* Site-prefixed semantic variables to avoid collisions with third-party CSS */
-  /* --site-bg: #ffffff;
+
+  /*  --site-bg: #ffffff;
   --site-text: #111111;
   --site-primary: #0056b3;
-  --site-border: rgba(0 0 0 / 0.1); */
+  --site-border: rgba(0 0 0 / 0.1);*/
 
   /* My way */
+  --site-bg: #fffcf9;
+
+  --site-font-main: Inter, system-ui, sans-serif;
+  --site-font-main-size: 1rem;
+
+  --site-font-menu: manrope, system-ui, sans-serif;
+  --site-font-menu-size: 1rem;
+  --site-color-menu: #f2ebdc;
+  --site-color-menu-hover: rgb(244, 239, 227);
+  --site-color-menu-bg: #6588a6;
+
+  --site-content-max: 82.5rem;
+  --site-page-gutter: clamp(1.5rem, 4vw, 3.75rem);
 }
 
 /* Automatic support if the user's operating system is set to dark mode */
@@ -50,6 +65,8 @@ html {
 
 /* 3. Improve default body typography */
 body {
+  font-family: var(--site-font-main);
+  font-size: var(--site-font-main-size);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   display: flex;
@@ -103,4 +120,9 @@ h6 {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.shell {
+  width: min(calc(100% - (var(--site-page-gutter) * 2)), var(--site-content-max));
+  margin-inline: auto;
 }

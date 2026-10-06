@@ -62,8 +62,7 @@ const {
 
 <style>
   .site-header {
-    background-color: var(--site-bg);
-    background-color: oklch(86.9% 0.005 56.366);
+    background-color: var(--site-color-menu-bg);
     border-bottom: 1px solid var(--site-border);
     position: sticky;
     top: 0;
@@ -106,14 +105,15 @@ const {
   }
 
   .desktop-nav a {
-    color: var(--site-text);
+    font-family: var(--site-font-menu);
+    color: var(--site-color-menu);
     text-decoration: none;
     font-weight: 500;
     font-size: 0.95rem;
   }
 
   .desktop-nav a:hover {
-    color: var(--site-primary);
+    color: var(--site-color-menu-hover);
   }
 
   .header-cta {
