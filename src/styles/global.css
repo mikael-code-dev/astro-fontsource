@@ -1,50 +1,88 @@
 /* @import "@fontsource/inter"; - imports all weights but to keep small size we do below */
 
 @import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
 @import '@fontsource/inter/latin-700.css';
-@import '@fontsource/manrope/latin-400.css';
-@import '@fontsource/instrument-serif/latin-400.css';
+@import '@fontsource/hanken-grotesk/latin-500.css';
 
 /* Base variables and default theme (light) */
 :root {
-  /* Site-prefixed semantic variables to avoid collisions with third-party CSS */
-
-  /*  --site-bg: #ffffff;
-  --site-text: #111111;
-  --site-primary: #0056b3;
-  --site-border: rgba(0 0 0 / 0.1);*/
-
-  /* My way */
   --site-bg: #fffcf9;
 
-  --site-font-main: Inter, system-ui, sans-serif;
-  --site-font-main-size: 1rem;
+  --font-main: Inter, system-ui, sans-serif;
+  --font-: 'Hanken Grotesk', system-ui, sans-serif;
+  --font-main-size: 1rem; /* 16px */
 
-  --site-font-menu: manrope, system-ui, sans-serif;
-  --site-font-menu-size: 1rem;
-  --site-color-menu: #f2ebdc;
-  --site-color-menu-hover: rgb(244, 239, 227);
-  --site-color-menu-bg: #6588a6;
+  --font-size-sm: clamp(0.8rem, 0.2vw + 0.75rem, 0.95rem);
+  --font-size-base: 1rem; /* 16px */
+  --font-size-md: clamp(1.25rem, 0.8vw + 1.1rem, 1.5rem);
+  --font-size-lg: clamp(1.6rem, 1.5vw + 1.2rem, 2.25rem);
+  --font-size-xl: clamp(2.2rem, 3vw + 1.5rem, 3.5rem);
+
+  --color-menu: #f2ebdc;
+  --color-menu-hover: rgb(244, 239, 227);
+  --color-menu-bg: #6588a6;
 
   --site-content-max: 82.5rem;
   --site-page-gutter: clamp(1.5rem, 4vw, 3.75rem);
+
+  --color-accent: #4f2884;
+  --color-accent-dark: #2c1650;
+  --color-accent-text: #1c1226;
+  --color-item-one: #92b2a2;
+  --color-item-one-dark: #5d7d6f;
+  --color-item-one-light: #cfe0d8;
+
+  --color-text: #211b29;
+
+  --color-bg-alt-one: #f7f5f0;
+  --color-bg-alt-two: #efeae0;
+  --color-bg-alt-three: #e7e1d4;
+}
+
+/* prettier-ignore */
+:root {
+  --lilac: #c3b6d6;
+  --lilac-mist: #ece8f3;
+  --line: rgba(44, 22, 80, 0.16);
+  --line-soft: rgba(44, 22, 80, 0.08);
+
+
+/* Colors done */
+    --aubergine: #4f2884;
+    --aubergine-deep: #2c1650;
+    --aubergine-ink: #1c1226;
+    --sage: #92b2a2;
+    --sage-deep: #5d7d6f;
+    --sage-soft: #cfe0d8;
+    --lilac: #c3b6d6;
+    --lilac-mist: #ece8f3;
+    --paper: #f7f5f0;
+    --paper-2: #efeae0;
+    --paper-3: #e7e1d4;
+    --ink: #211b29;
+    --line: rgba(44, 22, 80, .16);
+    --line-soft: rgba(44, 22, 80, .08);
+/* Colors done end */
+
+
+
+
+  --grad-sage: linear-gradient(135deg, #dcebe3 0%, #b9d2c6 45%, #92b2a2 100%);
+  
+  --grad-mist: radial-gradient(85% 95% at 82% 12%, var(--sage-soft), transparent 78%), radial-gradient(80% 90% at 8% 95%, var(--lilac-mist), transparent 80%);
+  
+  --grad-soft: linear-gradient(155deg, color-mix(in srgb, var(--sage-soft) 75%, var(--paper)) 0%, var(--paper) 52%, color-mix(in srgb, var(--lilac-mist) 85%, var(--paper)) 100% );
 }
 
 /* Automatic support if the user's operating system is set to dark mode */
 @media (prefers-color-scheme: dark) {
   :root {
     /* Define the same variables here with dark color values */
-    /* --site-bg: #121212;
-    --site-text: #f0f0f0;
-    --site-primary: #4da3ff;
-    --site-border: #333333; */
   }
 }
 
-/*  */
-/*  */
-
-/* Modern CSS Reset */
+/* Modern CSS Reset (AND SET) */
 
 /* 1. Use a more intuitive box-sizing model */
 *,
@@ -72,6 +110,17 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+/* If you don't need this filter, just comment it out or even better: delete the whole ::before. */
+body::before {
+  content: '';
+  position: fixed;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  inset: 0;
+  opacity: 0.03;
 }
 
 main {
@@ -105,6 +154,49 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.2;
+  font-size-adjust: from-font;
+}
+
+h1 {
+  font-size: var(--font-size-xl);
+}
+
+h2 {
+  font-size: var(--font-size-lg);
+}
+
+h3 {
+  font-size: var(--font-size-md);
+}
+
+h4 {
+  font-size: var(--font-size-base);
+}
+
+h5 {
+  font-size: var(--font-size-sm);
+}
+
+h6 {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+::selection {
+  color: var();
+  background: var();
 }
 
 @media (prefers-reduced-motion: reduce) {
