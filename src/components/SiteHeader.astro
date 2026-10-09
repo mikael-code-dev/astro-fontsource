@@ -19,8 +19,11 @@ const {
 ---
 
 <header class="site-header">
-  <div class="header-container">
-    
+  <div class="upper-header-container">
+    <p class="shell">We have built home for people since 1829 - Everyone should have a home</p>
+  </div>
+  <div class="header-container shell">
+
     <!-- Brand / Logo -->
     <a href="/" class="brand-link" aria-label={`${companyName} - Home`}>
       {logoImage ? (
@@ -62,17 +65,33 @@ const {
 
 <style>
   .site-header {
-    background-color: var(--site-color-menu-bg);
-    border-bottom: 1px solid var(--site-border);
+    background-color: color-mix(in srgb, var(--color-bg-alt-one) 90%, transparent 10%);
+    border-bottom: 1px solid rgba(0 0 0 / 0.05);
     position: sticky;
     top: 0;
     z-index: 100;
   }
 
+  .upper-header-container {
+    background-color: var(--color-item-one-dark);
+    padding: 0.6rem 0;
+    text-transform: uppercase;
+  }
+
+  .upper-header-container p {
+    color: rgba(255, 254, 240, 0.8);
+    font-family: var(--font-second);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-align: center;
+    /* width: 100%; */
+  }
+
   .header-container {
-    max-width: 1200px;
+    /* max-width: 1200px; */
     margin: 0 auto;
-    padding: 0rem 1.5rem;
+    /* padding: 0rem 1.5rem; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -101,19 +120,19 @@ const {
     list-style: none;
     padding: 0;
     margin: 0;
-    gap: 2rem;
+    gap: 2.6rem;
   }
 
   .desktop-nav a {
-    font-family: var(--site-font-menu);
+    font-family: var(--font-second);
     color: var(--site-color-menu);
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 0.875rem;
   }
 
   .desktop-nav a:hover {
-    color: var(--site-color-menu-hover);
+    color: var(--color-accent-text);
   }
 
   .header-cta {

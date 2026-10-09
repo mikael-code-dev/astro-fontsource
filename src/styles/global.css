@@ -4,13 +4,14 @@
 @import '@fontsource/inter/latin-500.css';
 @import '@fontsource/inter/latin-700.css';
 @import '@fontsource/hanken-grotesk/latin-500.css';
+@import '@fontsource/hanken-grotesk/latin-600.css';
 
 /* Base variables and default theme (light) */
 :root {
   --site-bg: #fffcf9;
 
   --font-main: Inter, system-ui, sans-serif;
-  --font-: 'Hanken Grotesk', system-ui, sans-serif;
+  --font-second: 'Hanken Grotesk', system-ui, sans-serif;
   --font-main-size: 1rem; /* 16px */
 
   --font-size-sm: clamp(0.8rem, 0.2vw + 0.75rem, 0.95rem);
@@ -19,25 +20,36 @@
   --font-size-lg: clamp(1.6rem, 1.5vw + 1.2rem, 2.25rem);
   --font-size-xl: clamp(2.2rem, 3vw + 1.5rem, 3.5rem);
 
-  --color-menu: #f2ebdc;
+  /* --color-menu: #f2ebdc;
   --color-menu-hover: rgb(244, 239, 227);
-  --color-menu-bg: #6588a6;
+  --color-menu-bg: #6588a6; */
 
   --site-content-max: 82.5rem;
   --site-page-gutter: clamp(1.5rem, 4vw, 3.75rem);
 
-  --color-accent: #4f2884;
-  --color-accent-dark: #2c1650;
-  --color-accent-text: #1c1226;
-  --color-item-one: #92b2a2;
+  --color-accent: #663f9e;
+  --color-accent-dark: #3e2c5a;
+  --color-accent-text: #261c30;
+  --color-item-one: #94b3a3;
   --color-item-one-dark: #5d7d6f;
   --color-item-one-light: #cfe0d8;
 
-  --color-text: #211b29;
+  --color-text: #081204;
 
   --color-bg-alt-one: #f7f5f0;
+  --color-bg-alt-one-test: #f6f5f0;
   --color-bg-alt-two: #efeae0;
   --color-bg-alt-three: #e7e1d4;
+
+  /* Gradients for this color schema */
+  /* Static color to be used with gradienst */
+  --gradient-static-color: rgba(240, 233, 195, 0.35);
+  --gradient-bg-one: linear-gradient(
+    134deg,
+    rgba(179, 219, 199, 0.4) 0%,
+    rgba(243, 222, 191, 0.2) 50%,
+    rgba(206, 194, 235, 0.4) 100%
+  );
 }
 
 /* prettier-ignore */
@@ -48,7 +60,7 @@
   --line-soft: rgba(44, 22, 80, 0.08);
 
 
-/* Colors done */
+/* Colors ripped */
     --aubergine: #4f2884;
     --aubergine-deep: #2c1650;
     --aubergine-ink: #1c1226;
@@ -63,16 +75,21 @@
     --ink: #211b29;
     --line: rgba(44, 22, 80, .16);
     --line-soft: rgba(44, 22, 80, .08);
-/* Colors done end */
-
-
-
+/* Colors ripped end */
 
   --grad-sage: linear-gradient(135deg, #dcebe3 0%, #b9d2c6 45%, #92b2a2 100%);
   
   --grad-mist: radial-gradient(85% 95% at 82% 12%, var(--sage-soft), transparent 78%), radial-gradient(80% 90% at 8% 95%, var(--lilac-mist), transparent 80%);
   
-  --grad-soft: linear-gradient(155deg, color-mix(in srgb, var(--sage-soft) 75%, var(--paper)) 0%, var(--paper) 52%, color-mix(in srgb, var(--lilac-mist) 85%, var(--paper)) 100% );
+  --grad-soft: linear-gradient(155deg, 
+                color-mix(in srgb, var(--sage-soft) 75%, var(--paper)) 0%, var(--paper) 52%, 
+                color-mix(in srgb, var(--lilac-mist) 85%, var(--paper)) 100% 
+                );
+
+
+ --test: linear-gradient(315deg, rgb(107, 37, 125) 0%, rgb(40, 29, 41) 100%);
+
+ 
 }
 
 /* Automatic support if the user's operating system is set to dark mode */
@@ -110,6 +127,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: var(--gradient-bg-one);
 }
 
 /* If you don't need this filter, just comment it out or even better: delete the whole ::before. */
@@ -121,6 +139,10 @@ body::before {
   z-index: 999;
   inset: 0;
   opacity: 0.03;
+}
+
+body::after {
+  /* background-color: var(--gradient-static-color); */
 }
 
 main {
