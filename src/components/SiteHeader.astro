@@ -2,25 +2,30 @@
 import { Image } from "astro:assets";
 import { navigationLinks } from "../data/navigation";
 import logoImage from "../assets/images/logo.svg";
+import type { string } from "astro:schema";
 
 interface Props {
   companyName?: string;
   showCta?: boolean;
   ctaText?: string;
   ctaPath?: string;
+  phoneText?: string;
+  phoneNumber?: string;
 }
 
 const {
   companyName = "My Company",
   showCta = true,
   ctaText = "Contact Us",
-  ctaPath = "/contact"
+  ctaPath = "/contact",
+  phoneText = "Call Us",
+  phoneNumber = "+4612345678",
 } = Astro.props;
 ---
 
 <header class="site-header">
   <div class="upper-header-container">
-    <p class="shell">We have built home for people since 1829 - Everyone should have a home</p>
+    <p class="shell">Building for people since 1829 &nbsp;&nbsp;—&nbsp;&nbsp; because everyone deserves a home</p>
   </div>
   <div class="header-container shell">
 
@@ -51,7 +56,8 @@ const {
     <!-- Header Actions (e.g. Mini-CTA) -->
     {showCta && (
       <div class="header-actions">
-        <a href={ctaPath} class="header-cta">{ctaText}</a>
+        <a href={ctaPath} class="header-cta cta-desktop">{ctaText}</a>
+        <a href={`tel:${phoneNumber}`} class="header-cta cta-mobile">{phoneText}</a>
       </div>
     )}
 
@@ -89,9 +95,7 @@ const {
   }
 
   .header-container {
-    /* max-width: 1200px; */
     margin: 0 auto;
-    /* padding: 0rem 1.5rem; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -124,25 +128,50 @@ const {
   }
 
   .desktop-nav a {
+    position: relative;
     font-family: var(--font-second);
-    color: var(--site-color-menu);
+    color: var(--color-text);
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
   }
 
   .desktop-nav a:hover {
-    color: var(--color-accent-text);
+    color: var(--color-text-light);
+  }
+
+  .desktop-nav a::before {
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-text-light);
+    opacity: 0;
+    transition: transform 300ms ease, opacity 300ms linear;
+  }
+
+  .desktop-nav a:hover::before {
+    opacity: 1;
+    transform: translateY(-3px);
   }
 
   .header-cta {
-    background-color: var(--site-primary);
-    color: #ffffff;
+    background-color: transparent;
+    color: var(--color-text);
     padding: 0.5rem 1rem;
     border-radius: 4px;
+    border: 1px solid rgb(0 0 0 / 0.2);
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 600;
+
+  }
+
+  .cta-mobile {
+    display: none;
   }
 
   .mobile-toggle {

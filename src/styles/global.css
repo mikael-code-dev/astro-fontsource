@@ -1,14 +1,17 @@
 /* @import "@fontsource/inter"; - imports all weights but to keep small size we do below */
 
 @import '@fontsource/inter/latin-400.css';
-@import '@fontsource/inter/latin-500.css';
-@import '@fontsource/inter/latin-700.css';
+/* @import '@fontsource/inter/latin-500.css'; */
+/* @import '@fontsource/inter/latin-700.css'; */
 @import '@fontsource/hanken-grotesk/latin-500.css';
 @import '@fontsource/hanken-grotesk/latin-600.css';
 
 /* Base variables and default theme (light) */
 :root {
   --site-bg: #fffcf9;
+
+  --site-page-gutter: clamp(1.5rem, 4vw, 3.75rem);
+  --site-content-max: 82.5rem; /* 1320 */
 
   --font-main: Inter, system-ui, sans-serif;
   --font-second: 'Hanken Grotesk', system-ui, sans-serif;
@@ -20,12 +23,8 @@
   --font-size-lg: clamp(1.6rem, 1.5vw + 1.2rem, 2.25rem);
   --font-size-xl: clamp(2.2rem, 3vw + 1.5rem, 3.5rem);
 
-  /* --color-menu: #f2ebdc;
-  --color-menu-hover: rgb(244, 239, 227);
-  --color-menu-bg: #6588a6; */
-
-  --site-content-max: 82.5rem;
-  --site-page-gutter: clamp(1.5rem, 4vw, 3.75rem);
+  /* --site-content-max: 82.5rem; */
+  /* --site-page-gutter: clamp(1.5rem, 4vw, 3.75rem); */
 
   --color-accent: #663f9e;
   --color-accent-dark: #3e2c5a;
@@ -35,20 +34,25 @@
   --color-item-one-light: #cfe0d8;
 
   --color-text: #081204;
+  --color-text-light: #4b6b5a;
 
   --color-bg-alt-one: #f7f5f0;
-  --color-bg-alt-one-test: #f6f5f0;
   --color-bg-alt-two: #efeae0;
   --color-bg-alt-three: #e7e1d4;
 
   /* Gradients for this color schema */
-  /* Static color to be used with gradienst */
-  --gradient-static-color: rgba(240, 233, 195, 0.35);
   --gradient-bg-one: linear-gradient(
     134deg,
-    rgba(179, 219, 199, 0.4) 0%,
+    rgba(162, 199, 181, 0.4) 0%,
     rgba(243, 222, 191, 0.2) 50%,
-    rgba(206, 194, 235, 0.4) 100%
+    rgba(206, 194, 235, 0.3) 100%
+  );
+
+  --gradient-bg-one-mirror: linear-gradient(
+    234deg,
+    rgba(162, 199, 181, 0.4) 0%,
+    rgba(243, 222, 191, 0.2) 50%,
+    rgba(206, 194, 235, 0.3) 100%
   );
 }
 
@@ -127,22 +131,18 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: var(--gradient-bg-one);
+  background: var(--color-bg-alt-one);
 }
 
 /* If you don't need this filter, just comment it out or even better: delete the whole ::before. */
 body::before {
   content: '';
   position: fixed;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 999;
   inset: 0;
   opacity: 0.03;
-}
-
-body::after {
-  /* background-color: var(--gradient-static-color); */
 }
 
 main {
