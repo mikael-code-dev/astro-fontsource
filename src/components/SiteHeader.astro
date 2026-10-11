@@ -2,7 +2,16 @@
 import { Image } from "astro:assets";
 import { navigationLinks } from "../data/navigation";
 import logoImage from "../assets/images/logo.svg";
-import type { string } from "astro:schema";
+
+const pathname = Astro.url.pathname;
+
+const isCurrentRoute = (href: string) => {
+  const route = href.split("#")[0];
+  if (route === "/") {
+    return pathname === "/";
+  }
+  return pathname === route || pathname.startsWith(`${route}/`);
+};
 
 interface Props {
   companyName?: string;
@@ -16,17 +25,19 @@ interface Props {
 const {
   companyName = "My Company",
   showCta = true,
-  ctaText = "Contact Us",
+  ctaText = "Chat With Us",
   ctaPath = "/contact",
-  phoneText = "Call Us",
+  phoneText = "Call:",
   phoneNumber = "+4612345678",
 } = Astro.props;
 ---
 
 <header class="site-header">
   <div class="upper-header-container">
-    <p class="shell">Building for people since 1829 &nbsp;&nbsp;—&nbsp;&nbsp; because everyone deserves a home</p>
+    <p class="shell tagline-desktop">Tagline for desktop can be much &nbsp;&nbsp;—&nbsp;&nbsp; Longer than it can for Mobile view</p>
+    <p class="shell tagline-mobile">As I said, now we want it shorter</p>
   </div>
+
   <div class="header-container shell">
 
     <!-- Brand / Logo -->
@@ -45,10 +56,16 @@ const {
     </a>
 
     <!-- Desktop Navigation -->
-    <nav class="desktop-nav" aria-label="Main Navigation">
+    <nav class="main-nav" aria-label="Main Navigation">
       <ul>
         {navigationLinks.map((item) => (
-          <li><a href={item.path}>{item.title}</a></li>
+          <li>
+            <a 
+              href={item.path} 
+              class:list={[{ active: isCurrentRoute(item.path) }]}
+            >
+              {item.title}
+            </a></li>
         ))}
       </ul>
     </nav>
@@ -57,13 +74,17 @@ const {
     {showCta && (
       <div class="header-actions">
         <a href={ctaPath} class="header-cta cta-desktop">{ctaText}</a>
-        <a href={`tel:${phoneNumber}`} class="header-cta cta-mobile">{phoneText}</a>
+        <a href={`tel:${phoneNumber}`} class="header-cta cta-mobile"><em>{phoneText} {phoneNumber}</em></a>
       </div>
     )}
 
     <!-- Mobile Menu Toggle Button -->
     <button class="mobile-toggle" aria-label="Toggle Navigation" aria-expanded="false">
-      <span class="hamburger-icon"></span>
+      <span class="hamburger-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
     </button>
 
   </div>
@@ -94,11 +115,16 @@ const {
     /* width: 100%; */
   }
 
+  .tagline-mobile {
+    display: none;
+  }
+
   .header-container {
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
   }
 
   .brand-link {
@@ -119,7 +145,7 @@ const {
     color: var(--site-text);
   }
 
-  .desktop-nav ul {
+  .main-nav ul {
     display: flex;
     list-style: none;
     padding: 0;
@@ -127,7 +153,7 @@ const {
     gap: 2.6rem;
   }
 
-  .desktop-nav a {
+  .main-nav a {
     position: relative;
     font-family: var(--font-second);
     color: var(--color-text);
@@ -136,11 +162,12 @@ const {
     font-size: 0.9375rem;
   }
 
-  .desktop-nav a:hover {
+  .main-nav a:hover,
+  .main-nav a.active {
     color: var(--color-text-light);
   }
 
-  .desktop-nav a::before {
+  .main-nav a::before {
     content: "";
     position: absolute;
     top: 25px;
@@ -153,21 +180,22 @@ const {
     transition: transform 300ms ease, opacity 300ms linear;
   }
 
-  .desktop-nav a:hover::before {
+  .main-nav a:hover::before {
     opacity: 1;
     transform: translateY(-3px);
   }
 
   .header-cta {
+    display: inline-block;
     background-color: transparent;
-    color: var(--color-text);
+    font-family: var(--font-second);
+    color: var(--color-text-light);
     padding: 0.5rem 1rem;
-    border-radius: 4px;
-    border: 1px solid rgb(0 0 0 / 0.2);
+    border-radius: 8px;
+    border: 2px solid var(--color-item-one-dark);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
-
   }
 
   .cta-mobile {
@@ -177,20 +205,113 @@ const {
   .mobile-toggle {
     display: none;
     background: none;
-    border: none;
+    border: 2px solid var(--color-item-one-dark);
+    border-radius: 8px;
     cursor: pointer;
-    padding: 0.5rem;
+    height: 44px;
+    width: 42px;
+  }
+
+  .hamburger-icon span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: var(--color-item-one-dark);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .hamburger-icon {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .mobile-toggle.is-open .hamburger-icon span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .mobile-toggle.is-open .hamburger-icon span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-toggle.is-open .hamburger-icon span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
   }
 
   /* Responsive layout adjustment for mobile */
   @media (max-width: 768px) {
-    .desktop-nav,
-    .header-actions {
+    .tagline-desktop,
+    .cta-desktop {
       display: none;
+    }
+
+    .tagline-mobile {
+      display: block;
+    }
+
+    .header-actions {
+      display: block;
+      margin-left: auto;
+      margin-right: 0.5rem;
+    }
+
+    .main-nav a::before {
+      content: none;
+    }
+
+    .cta-mobile {
+      display: inline-block;
     }
 
     .mobile-toggle {
       display: block;
     }
+
+    .site-header {
+      /* position: relative; */
+    }
+
+    .header-container {
+      position: static;
+    }
+
+    .main-nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: var(--color-bg-alt-one, #fff);
+      border-bottom: 1px solid rgb(0 0 0 / 0.1);
+      max-height: 0;
+      overflow: hidden;
+      /* transition: max-height 0.25s ease-in-out, padding 0.25s ease-in-out, width 0.25s; */
+      transition: max-height 0.25s ease-out, padding 0.25s ease-in-out, width 0.25s;
+      padding: 0 1.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    }
+
+    .main-nav.is-open {
+      max-height: 400px; /* Make sure all your links are visible when setting this */
+      padding: 1.5rem;
+      border-bottom: 1px solid rgb(0 0 0 / 0.2);
+    }
+
+    .main-nav ul {
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+    }
   }
 </style>
+
+<script>
+  const toggleButton = document.querySelector('.mobile-toggle');
+  const mainNav = document.querySelector('.main-nav');
+
+  toggleButton?.addEventListener('click', () => {
+    const isOpen = toggleButton.classList.toggle('is-open');
+    mainNav?.classList.toggle('is-open', isOpen)
+    toggleButton.setAttribute('aria-expanded', String(isOpen));
+
+});
+</script>

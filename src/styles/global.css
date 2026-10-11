@@ -23,9 +23,6 @@
   --font-size-lg: clamp(1.6rem, 1.5vw + 1.2rem, 2.25rem);
   --font-size-xl: clamp(2.2rem, 3vw + 1.5rem, 3.5rem);
 
-  /* --site-content-max: 82.5rem; */
-  /* --site-page-gutter: clamp(1.5rem, 4vw, 3.75rem); */
-
   --color-accent: #663f9e;
   --color-accent-dark: #3e2c5a;
   --color-accent-text: #261c30;
@@ -217,8 +214,7 @@ h6 {
 }
 
 ::selection {
-  color: var();
-  background: var();
+  background: var(--color-item-one-light);
 }
 
 @media (prefers-reduced-motion: reduce) {
